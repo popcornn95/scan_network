@@ -30,11 +30,21 @@ def scan(ipadress):
     # answered_list  for ips that are in the network
     # print(answered_list.summary())
 
-    print("IP\t\t\t\tMAC Address\n.................................")
+    client_list =[]
     for element in answered_list:
+          client_dict = {"ip":element[1].psrc ,"mac":element[1].hwsrc}
+          client_list.append(client_dict)
         # print (element[1].show())
         # printing source ip and mac
-          print (element[1].psrc + "\t\t"+element[1].hwsrc)
+        # print (element[1].psrc + "\t\t"+element[1].hwsrc)
+    return client_list
 
 
-scan("10.0.2.1/24")
+def print_result(resultlist):
+    print("IP\t\t\t\tMAC Address\n.................................")
+    for client in resultlist:
+        print(client["ip"] + "\t\t"+client["mac"])
+
+
+scan_result= scan("10.0.2.1/24")
+print_result(scan_result)
