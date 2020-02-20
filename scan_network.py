@@ -1,6 +1,16 @@
 # FInding mac address usinf Address resolution protocol (ARP)
 #!usr/bin/nav/env python
 import scapy.all as scapy
+import argparse
+
+
+def get_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--targetip", dest="ipaddress", help="Destination IP address")
+    options =  parser.parse_args()
+    if not options.ipaddress:
+        parser.error(("[-] Please specify an IP address, use --help for more info"))
+    return options
 
 
 def scan(ipadress):
@@ -45,6 +55,10 @@ def print_result(resultlist):
     for client in resultlist:
         print(client["ip"] + "\t\t"+client["mac"])
 
-
-scan_result= scan("10.0.2.1/24")
+options = get_arguments()
+scan_result= scan(options.ipaddress)
 print_result(scan_result)
+
+# HOW TO RUN
+# commadline --pythpn filename -t ipaddress
+# /PycharmProjects/scan_network# python scan_network.py -t  10.0.2.1/24
